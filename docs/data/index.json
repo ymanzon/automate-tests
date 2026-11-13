@@ -1,7 +1,23 @@
 {
  "v": 1,
- "updated": 1794582975125,
+ "updated": 1794611121519,
  "runs": [
+  {
+   "id": "9jnu22x9",
+   "flowId": "jxpkpu6o",
+   "flowName": "Flujo 13/11/26, 4:55 p.m.",
+   "startedAt": 1794610869271,
+   "ms": 60794,
+   "status": "passed",
+   "stats": {
+    "failed": 0,
+    "passed": 5,
+    "rows": 5,
+    "skipped": 0,
+    "steps": 32,
+    "stopped": 0
+   }
+  },
   {
    "id": "5vtfhkvl",
    "flowId": "ejd94eg2",
