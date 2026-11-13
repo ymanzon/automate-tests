@@ -80,9 +80,26 @@ const lib = (function makeLib(R) {
 
 // Datos: se ejecuta el test una vez por fila. Edita este arreglo o cárgalo desde tu propio CSV.
 const rows: Record<string, string>[] = [
-  {"paqueterias_actuales_confiables_en_mexico_desde_el_exterior":"paqueterias de mexico confiables para enviar paquetes desde el exterior"},
-  {"paqueterias_actuales_confiables_en_mexico_desde_el_exterior":"servicios de paqueteria internacional confiables en mexico"},
-  {"paqueterias_actuales_confiables_en_mexico_desde_el_exterior":"empresas de envio de paquetes desde el extranjero a mexico"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"la_importancia_de_la_matematica_en_el_mundo_y_el_pensamiento_analitico"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"por_que_la_matematica_es_critica_para_el_desarrollo_cognitivo"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"beneficios_de_estudiar_matematicas_en_educacion_primaera"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"impacta_la_matematica_en_la_economia_global"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"la_matematica_y_el_desarrollo_de_la_logica_crítica"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"la_matematica_es_clave_para_la_innovacion_tecnologica"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"por_que_la_matematica_es_esencial_en_la_bioinformática"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"el_rol_de_la_matematica_en_el_ensayo_cientifico"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"como_la_matematica_fomenta_el_raciomatemático_en_ciencia"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"el_papel_de_la_matematica_en_la_ingenieria_modern"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"la_matematica_y_su_influencia_en_la_decisión_económica"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"por_que_la_matematica_es_instrumento_de_analisis"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"los_valores_matemáticos_en_la_filosofía_del_conocimiento"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"la_matemática_y_la_capacidad_de_resolver_problemas_complejos"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"el_uso_de_la_matemática_en_la_inteligencia_artificial"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"la_matematica_y_el_fomento_del_piñcho_analítico"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"por_que_la_matemática_es_un_aliado_para_el_aprendizaje"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"la_matematica_y_el_desarrollo_de_la_creatividad"},
+  {"porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico":"el_importante_de_la_matemática_en_el_desarrollo_humano"},
 ];
 
 for (const [i, rowVars] of rows.entries()) {
@@ -90,7 +107,7 @@ for (const [i, rowVars] of rows.entries()) {
     const vars: Record<string, any> = { ...rowVars, row: i + 1, rows: rows.length, seed: 0 };
     await page.goto("https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN");
     await page.locator("#sb_form_q").first().fill("");
-    await page.locator("#sb_form_q").first().pressSequentially(`${lib.str(vars.paqueterias_actuales_confiables_en_mexico_desde_el_exterior)}`, { delay: 50 });
+    await page.locator("#sb_form_q").first().pressSequentially(`${lib.str(vars.porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico)}`, { delay: 50 });
     await page.locator("#sb_form_q").first().press("Enter");
     await page.waitForURL(new RegExp("/search"));
     await page.waitForTimeout(5000);

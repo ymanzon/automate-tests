@@ -1,7 +1,7 @@
 goto("https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN")
 
 fill("#sb_form_q", "")
-type("#sb_form_q", "{paqueterias_actuales_confiables_en_mexico_desde_el_exterior}")
+type("#sb_form_q", "{porque_es_importante_matematicas_en_el_mundo_y_el_pensamiento_analitico}")
 press("Enter", "#sb_form_q")
 wait_url("/search")
 sleep(5)
