@@ -1,7 +1,23 @@
 {
  "v": 1,
- "updated": 1794551899976,
+ "updated": 1794552241452,
  "runs": [
+  {
+   "id": "btu1vmt4",
+   "flowId": "ejd94eg2",
+   "flowName": "REWARDS",
+   "startedAt": 1794552135470,
+   "ms": 36775,
+   "status": "passed",
+   "stats": {
+    "failed": 0,
+    "passed": 3,
+    "rows": 3,
+    "skipped": 0,
+    "steps": 6,
+    "stopped": 0
+   }
+  },
   {
    "id": "n9piwagj",
    "flowId": "ejd94eg2",

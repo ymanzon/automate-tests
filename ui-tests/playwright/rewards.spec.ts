@@ -80,9 +80,9 @@ const lib = (function makeLib(R) {
 
 // Datos: se ejecuta el test una vez por fila. Edita este arreglo o cárgalo desde tu propio CSV.
 const rows: Record<string, string>[] = [
-  {"titulo_de_un_tema_sobre_arquitectura_de_software_y_buenas_practicas":"¿Qué Pokémon tiene bolsas eléctricas en sus mejillas que se recargan mientras duerme y puede soltar descargas cuando se siente amenazado? Pikachu"},
-  {"titulo_de_un_tema_sobre_arquitectura_de_software_y_buenas_practicas":"¿Qué Pokémon de tipo fuego lleva una llama en la punta de su cola que arde con más fuerza cuando está feliz y se debilita si está en peligro? Charmander"},
-  {"titulo_de_un_tema_sobre_arquitectura_de_software_y_buenas_practicas":"¿Qué Pokémon lleva en su espalda una semilla desde que nace"},
+  {"paqueterias_actuales_confiables_en_mexico_desde_el_exterior":"paqueterias de mexico confiables para enviar paquetes desde el exterior"},
+  {"paqueterias_actuales_confiables_en_mexico_desde_el_exterior":"servicios de paqueteria internacional confiables en mexico"},
+  {"paqueterias_actuales_confiables_en_mexico_desde_el_exterior":"empresas de envio de paquetes desde el extranjero a mexico"},
 ];
 
 for (const [i, rowVars] of rows.entries()) {
@@ -90,7 +90,7 @@ for (const [i, rowVars] of rows.entries()) {
     const vars: Record<string, any> = { ...rowVars, row: i + 1, rows: rows.length, seed: 0 };
     await page.goto("https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN");
     await page.locator("#sb_form_q").first().fill("");
-    await page.locator("#sb_form_q").first().pressSequentially(`${lib.str(vars.titulo_de_un_tema_sobre_arquitectura_de_software_y_buenas_practicas)}`, { delay: 50 });
+    await page.locator("#sb_form_q").first().pressSequentially(`${lib.str(vars.paqueterias_actuales_confiables_en_mexico_desde_el_exterior)}`, { delay: 50 });
     await page.locator("#sb_form_q").first().press("Enter");
     await page.waitForURL(new RegExp("/search"));
     await page.waitForTimeout(5000);
