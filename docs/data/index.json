@@ -1,0 +1,22 @@
+{
+ "v": 1,
+ "updated": 1794551526422,
+ "runs": [
+  {
+   "id": "o5lkbhm6",
+   "flowId": "ejd94eg2",
+   "flowName": "Flujo nuevo",
+   "startedAt": 1794530987070,
+   "ms": 222666,
+   "status": "stopped",
+   "stats": {
+    "failed": 0,
+    "passed": 19,
+    "rows": 25,
+    "skipped": 5,
+    "steps": 6,
+    "stopped": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resultados de pruebas UI</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#14181f;--mu:#5d6675;--bd:#dfe3ea;--ok:#117a3e;--okbg:#e3f5ea;--bad:#b42318;--badbg:#fde8e6;--warn:#8a5a00;--warnbg:#fff1d6;--acc:#2455d6}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1218;--card:#171b23;--tx:#e8ebf1;--mu:#9aa3b2;--bd:#2a303c;--ok:#4cc98a;--okbg:#12301f;--bad:#ff8a80;--badbg:#3a1815;--warn:#f2c35b;--warnbg:#38290a;--acc:#7da2ff}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:20px;margin:0 0 2px}.sub{color:var(--mu);margin:0 0 16px;font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px 14px}
+.card b{display:block;font-size:24px;line-height:1.2}.card span{color:var(--mu);font-size:12px}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.panel h2{font-size:13px;margin:0 0 8px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:7px;padding:6px 9px}
+button{cursor:pointer}button:hover{border-color:var(--acc)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd);vertical-align:top}
+th{color:var(--mu);font-size:12px;font-weight:600}tbody tr.run{cursor:pointer}tbody tr.run:hover{background:var(--bg)}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.passed{color:var(--ok)}.failed{color:var(--bad)}.stopped,.skipped{color:var(--warn)}
+.tag.passed{background:var(--okbg)}.tag.failed{background:var(--badbg)}.tag.stopped,.tag.skipped{background:var(--warnbg)}
+.err{color:var(--bad);font-size:12px;margin-top:2px;word-break:break-word}.mu{color:var(--mu)}
+.num{text-align:right;white-space:nowrap}
+.det{background:var(--bg);padding:8px 10px 12px}
+.row{border:1px solid var(--bd);border-radius:8px;background:var(--card);margin:8px 0;padding:8px 10px}
+.row summary{cursor:pointer;font-weight:600}
+.step{display:grid;grid-template-columns:34px 20px 1fr 70px;gap:6px;padding:3px 0;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;border-top:1px dashed var(--bd)}
+.step:first-of-type{border-top:0}.step.st-failed{background:var(--badbg)}.step .t{word-break:break-all}
+.vars{font-size:12px;color:var(--mu);margin:4px 0}
+#chart{display:flex;align-items:flex-end;gap:3px;height:70px}
+#chart i{flex:1;min-width:4px;max-width:22px;border-radius:3px 3px 0 0;display:block}
+#chart i.passed{background:var(--ok)}#chart i.failed{background:var(--bad)}#chart i.stopped{background:var(--warn)}
+.legend{font-size:12px;color:var(--mu);margin-top:6px}
+.empty{padding:28px;text-align:center;color:var(--mu)}
+@media(max-width:600px){.hide-s{display:none}.step{grid-template-columns:28px 18px 1fr 56px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Resultados de pruebas UI</h1>
+  <p class="sub" id="sub">Cargando…</p>
+  <div class="cards" id="cards"></div>
+  <div class="panel"><h2>Últimas ejecuciones</h2><div id="chart" role="img" aria-label="Resultado de las últimas ejecuciones"></div><div class="legend">Cada barra es una ejecución (de la más antigua a la más reciente); la altura es su duración. Verde = pasó, rojo = falló.</div></div>
+  <div class="panel">
+    <div class="filters">
+      <select id="fFlow" aria-label="Flujo"><option value="">Todos los flujos</option></select>
+      <select id="fStatus" aria-label="Estado"><option value="">Todos los estados</option><option value="passed">Pasaron</option><option value="failed">Fallaron</option><option value="stopped">Detenidas</option></select>
+    </div>
+    <div id="list"></div>
+  </div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const ICON = { passed: '✓', failed: '✗', stopped: '■', skipped: '–' };
+const LABEL = { passed: 'Pasó', failed: 'Falló', stopped: 'Detenida', skipped: 'Omitida' };
+const fmtMs = (ms) => ms < 1000 ? ms + ' ms' : ms < 60000 ? (ms / 1000).toFixed(1) + ' s' : Math.floor(ms / 60000) + ' min ' + Math.round((ms % 60000) / 1000) + ' s';
+const fmtDate = (t) => new Date(t).toLocaleString('es-MX', { dateStyle: 'short', timeStyle: 'medium' });
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const tag = (st) => el('span', 'tag ' + st, ICON[st] + ' ' + LABEL[st]);
+let runs = [], open = null;
+
+async function load() {
+  try {
+    const r = await fetch('data/index.json?_=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    runs = (await r.json()).runs || [];
+  } catch (e) {
+    $('sub').textContent = 'No hay resultados todavía (o no se pudieron cargar): ' + e.message;
+    runs = [];
+  }
+  const flows = [...new Set(runs.map((r) => r.flowName))].sort();
+  for (const f of flows) { const o = el('option', null, f); o.value = f; $('fFlow').append(o); }
+  render();
+}
+
+function render() {
+  const ff = $('fFlow').value, fs = $('fStatus').value;
+  const list = runs.filter((r) => (!ff || r.flowName === ff) && (!fs || r.status === fs));
+  const done = list.filter((r) => r.status !== 'stopped');
+  const pass = done.filter((r) => r.status === 'passed').length;
+  const last = list[0];
+  $('sub').textContent = runs.length ? `${runs.length} ejecución(es) · última: ${fmtDate(runs[0].startedAt)}` : 'Sin ejecuciones sincronizadas.';
+  const cards = [
+    [list.length, 'Ejecuciones'],
+    [done.length ? Math.round(pass / done.length * 100) + '%' : '–', 'Tasa de éxito'],
+    [last ? LABEL[last.status] : '–', 'Última ejecución'],
+    [list.length ? fmtMs(Math.round(list.reduce((a, r) => a + r.ms, 0) / list.length)) : '–', 'Duración media'],
+  ];
+  $('cards').replaceChildren(...cards.map(([b, s]) => { const c = el('div', 'card'); c.append(el('b', null, String(b)), el('span', null, s)); return c; }));
+
+  const recent = list.slice(0, 40).reverse(), max = Math.max(1, ...recent.map((r) => r.ms));
+  $('chart').replaceChildren(...recent.map((r) => { const i = el('i', r.status); i.style.height = Math.max(8, Math.round(r.ms / max * 100)) + '%'; i.title = `${r.flowName} · ${LABEL[r.status]} · ${fmtMs(r.ms)} · ${fmtDate(r.startedAt)}`; return i; }));
+
+  if (!list.length) { $('list').replaceChildren(el('div', 'empty', 'No hay ejecuciones con estos filtros.')); return; }
+  const t = el('table');
+  t.innerHTML = '<thead><tr><th>Flujo</th><th>Estado</th><th class="hide-s">Filas</th><th class="num">Duración</th><th>Fecha</th></tr></thead>';
+  const tb = el('tbody');
+  for (const r of list.slice(0, 200)) {
+    const tr = el('tr', 'run'); tr.tabIndex = 0;
+    const c1 = el('td'); c1.append(el('div', null, r.flowName)); if (r.error) c1.append(el('div', 'err', r.error));
+    const c2 = el('td'); c2.append(tag(r.status));
+    const c3 = el('td', 'hide-s', r.stats ? `${r.stats.passed}/${r.stats.rows}` : '');
+    tr.append(c1, c2, c3, el('td', 'num', fmtMs(r.ms)), el('td', 'mu', fmtDate(r.startedAt)));
+    const go = () => toggle(tr, r);
+    tr.onclick = go; tr.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
+    tb.append(tr);
+  }
+  t.append(tb); $('list').replaceChildren(t);
+}
+
+async function toggle(tr, r) {
+  const nx = tr.nextElementSibling;
+  if (nx && nx.classList.contains('detail')) { nx.remove(); return; }
+  const d = el('tr', 'detail'), td = el('td'); td.colSpan = 5; td.className = 'det'; td.textContent = 'Cargando detalle…'; d.append(td);
+  tr.after(d);
+  try {
+    const res = await fetch(`data/runs/${encodeURIComponent(r.id)}.json`);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const run = await res.json();
+    const head = el('div', 'mu', `Semilla del azar: ${run.seed ?? '–'} (úsala en la extensión para repetir esta ejecución con los mismos valores aleatorios)`); head.style.marginBottom = '6px';
+    td.replaceChildren(head, ...run.rows.map((row) => {
+      const det = el('details', 'row'); det.open = row.status === 'failed' || run.rows.length === 1;
+      const sm = el('summary'); sm.append(tag(row.status), ' ', row.n ? `Fila ${row.n} · ` : '', fmtMs(row.ms));
+      det.append(sm);
+      if (row.vars && Object.keys(row.vars).length) det.append(el('div', 'vars', Object.entries(row.vars).map(([k, v]) => `${k} = ${v}`).join('  ·  ')));
+      if (row.error) det.append(el('div', 'err', row.error));
+      for (const s of row.steps) {
+        const st = el('div', 'step st-' + s.status);
+        st.append(el('span', 'mu', String(s.n)), el('span', s.status, ICON[s.status]), el('span', 't', s.text + (s.count > 1 ? '  ×' + s.count : '')), el('span', 'mu num', s.status === 'skipped' ? '' : fmtMs(s.ms)));
+        det.append(st);
+      }
+      return det;
+    }));
+  } catch (e) { td.textContent = 'No se pudo cargar el detalle: ' + e.message; }
+}
+$('fFlow').onchange = $('fStatus').onchange = render;
+load();
+</script>
+</body>
+</html>

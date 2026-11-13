@@ -1,0 +1,19 @@
+{
+  "v": 1,
+  "flows": [
+    {
+      "created": 1794530958061,
+      "csv": "titulo_de_un_tema_sobre_arquitectura_de_software_y_buenas_practicas\nOrigen de la bicicleta y cómo surgió la idea de crear un vehículo de dos ruedas.\nHistoria de Karl von Drais y la creación de la draisiana.\nLos primeros prototipos de bicicletas y sus características.\nInvención de los pedales y evolución de los sistemas de transmisión.",
+      "id": "ejd94eg2",
+      "name": "Flujo nuevo",
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\n\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"{titulo_de_un_tema_sobre_arquitectura_de_software_y_buenas_practicas}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep(5)"
+    }
+  ],
+  "plugins": [
+    {
+      "name": "script2.js",
+      "code": "import { httpx } from \"./helpers/k6.httpx.js\";\nimport { sleep }  from \"k6\";\n\n// ── Config ──────────────────────────────────────\nhttpx.baseUrl(httpx.env(\"BASE_URL\", \"https://jsonplaceholder.typicode.com\"));\n\n// ── Metric declarations (MUST be at init context — top level, outside any function) ──\nhttpx.declareMetric(\"posts_duration\");\n\n// ── Lifecycle ────────────────────────────────────\nhttpx.beforeAll(() => {\n    console.log(\"Setting up auth token...\");\n    // Perform a real login if needed:\n    // const res = httpx.post(\"/auth/login\", JSON.stringify({ user: \"x\", pass: \"y\" }));\n    // httpx.session.setToken(res.json().token);\n    httpx.session.setToken(\"my-demo-token\");\n});\n\nexport function setup() {\n    httpx.runHooks(\"beforeAll\");\n}\n\nexport function teardown() {\n    httpx.printTimeline();\n    httpx.runHooks(\"afterAll\");\n}\n\n// ── Test scenario ────────────────────────────────\nexport default function () {\n\n    httpx.scenario(\"User flow\", () => {\n\n        // 1. Get list of users\n        httpx.step(\"Fetch users\", () => {\n            httpx.get(\"/users\")\n                .expectStatus(200)\n                .expect2xx()\n                .expectTime(500)\n                .contract({ id: \"number\", name: \"string\" })\n                .extract({ firstUserId: \"[0].id\" });\n        });\n\n        // 2. Post new resource\n        httpx.step(\"Create post\", () => {\n            httpx.post(\n                \"/posts\",\n                JSON.stringify({ title: \"k6 test\", body: \"hello\", userId: 1 }),\n                { headers: { \"Content-Type\": \"application/json\" } }\n            )\n            .expectStatus(201)\n            .expectJSON({ title: \"k6 test\" })\n            .trace();\n        });\n\n        // 3. Parallel GET requests\n        httpx.step(\"Parallel fetch\", () => {\n            const [r1, r2] = httpx.parallel([\n                [\"GET\", \"/posts/1\"],\n                [\"GET\", \"/posts/2\"],\n            ]);\n            r1.expectStatus(200);\n            r2.expectStatus(200);\n        });\n\n        // 4. Retry with backoff\n        httpx.step(\"Retry example\", () => {\n            httpx.retry(\n                () => httpx.get(\"/posts/1\").expectStatus(200),\n                { retries: 3, baseDelay: 0.5, factor: 2 }\n            );\n        });\n\n        // 5. Custom metric with tags\n        httpx.step(\"Custom metric\", () => {\n            const res = httpx.get(httpx.buildUrl(\"/posts\", { userId: 1 }));\n            httpx.metric(\"posts_duration\", res.duration(), { endpoint: \"posts\" });\n        });\n\n    });\n\n    sleep(1);\n}\n",
+      "enabled": true
+    }
+  ]
+}
