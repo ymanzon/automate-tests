@@ -15,6 +15,38 @@
       "id": "agh40t5e",
       "name": "Flujo nuevo",
       "script": ""
+    },
+    {
+      "created": 1794934809537,
+      "id": "kqopddbr",
+      "name": "REWARDS (IA 5)",
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"dime quién es {nombres_de_personajes_iconicos_del_mundo}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
+    },
+    {
+      "created": 1794934809538,
+      "id": "12i6gf7o",
+      "name": "REWARDS (IA 4)",
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"quién es la figura histórica {nombres_de_personajes_iconicos_del_mundo}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
+    },
+    {
+      "created": 1794934809539,
+      "id": "zijdzdqb",
+      "name": "REWARDS (IA 3)",
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"busca la identidad de {nombres_de_personajes_iconicos_del_mundo}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
+    },
+    {
+      "created": 1794934809540,
+      "id": "za37q7u6",
+      "name": "REWARDS (IA 2)",
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"¿quién es '{nombres_de_personajes_iconicos_del_mundo}'?\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
+    },
+    {
+      "created": 1794934809541,
+      "csv": "nombres_de_personajes_iconicos_del_mundo\nNelson Mandela\nMahatma Gandhi\nLeonardo da Vinci",
+      "dataSource": "ai",
+      "id": "e9ntpo51",
+      "name": "REWARDS (IA 1)",
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"quien es '{nombres_de_personajes_iconicos_del_mundo}'\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
     }
   ],
   "plugins": []

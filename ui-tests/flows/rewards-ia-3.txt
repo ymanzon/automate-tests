@@ -1,0 +1,6 @@
+goto("https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN")
+fill("#sb_form_q", "")
+type("#sb_form_q", "busca la identidad de {nombres_de_personajes_iconicos_del_mundo}")
+press("Enter", "#sb_form_q")
+wait_url("/search")
+sleep({random(10,15)})
