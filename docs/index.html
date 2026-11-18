@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Resultados de pruebas UI</title>
+<title>Vextaro · Resultados de pruebas</title>
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--tx:#14181f;--mu:#5d6675;--bd:#dfe3ea;--ok:#117a3e;--okbg:#e3f5ea;--bad:#b42318;--badbg:#fde8e6;--warn:#8a5a00;--warnbg:#fff1d6;--acc:#2455d6}
 @media(prefers-color-scheme:dark){:root{--bg:#0f1218;--card:#171b23;--tx:#e8ebf1;--mu:#9aa3b2;--bd:#2a303c;--ok:#4cc98a;--okbg:#12301f;--bad:#ff8a80;--badbg:#3a1815;--warn:#f2c35b;--warnbg:#38290a;--acc:#7da2ff}}
@@ -37,11 +37,12 @@ th{color:var(--mu);font-size:12px;font-weight:600}tbody tr.run{cursor:pointer}tb
 .legend{font-size:12px;color:var(--mu);margin-top:6px}
 .empty{padding:28px;text-align:center;color:var(--mu)}
 @media(max-width:600px){.hide-s{display:none}.step{grid-template-columns:28px 18px 1fr 56px}}
+.shot{margin-left:8px;color:var(--primary,#2563eb);text-decoration:none}.heal{margin:2px 0 4px 28px;padding:2px 8px;border-left:3px solid #f59e0b;font-size:12px}
 </style>
 </head>
 <body>
 <main>
-  <h1>Resultados de pruebas UI</h1>
+  <h1>Vextaro · Resultados de pruebas</h1>
   <p class="sub" id="sub">Cargando…</p>
   <div class="cards" id="cards"></div>
   <div class="panel"><h2>Últimas ejecuciones</h2><div id="chart" role="img" aria-label="Resultado de las últimas ejecuciones"></div><div class="legend">Cada barra es una ejecución (de la más antigua a la más reciente); la altura es su duración. Verde = pasó, rojo = falló.</div></div>
@@ -101,7 +102,7 @@ function render() {
   const tb = el('tbody');
   for (const r of list.slice(0, 200)) {
     const tr = el('tr', 'run'); tr.tabIndex = 0;
-    const c1 = el('td'); c1.append(el('div', null, r.flowName)); if (r.error) c1.append(el('div', 'err', r.error));
+    const c1 = el('td'); c1.append(el('div', null, r.flowName + (r.source === 'ci' ? '  · CI' : '') + (r.stats && r.stats.healed ? '  · 🩹' + r.stats.healed : ''))); if (r.error) c1.append(el('div', 'err', r.error));
     const c2 = el('td'); c2.append(tag(r.status));
     const c3 = el('td', 'hide-s', r.stats ? `${r.stats.passed}/${r.stats.rows}` : '');
     tr.append(c1, c2, c3, el('td', 'num', fmtMs(r.ms)), el('td', 'mu', fmtDate(r.startedAt)));
@@ -110,6 +111,12 @@ function render() {
     tb.append(tr);
   }
   t.append(tb); $('list').replaceChildren(t);
+}
+
+function shotLink(url, label) {
+  const a = el('a', 'shot', label || '📷');
+  a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.title = 'Ver captura';
+  return a;
 }
 
 async function toggle(tr, r) {
@@ -128,10 +135,13 @@ async function toggle(tr, r) {
       det.append(sm);
       if (row.vars && Object.keys(row.vars).length) det.append(el('div', 'vars', Object.entries(row.vars).map(([k, v]) => `${k} = ${v}`).join('  ·  ')));
       if (row.error) det.append(el('div', 'err', row.error));
+      if (row.shotUrl) { const b = el('div'); b.append(shotLink(row.shotUrl, 'Ver captura del fallo')); det.append(b); }
       for (const s of row.steps) {
         const st = el('div', 'step st-' + s.status);
-        st.append(el('span', 'mu', String(s.n)), el('span', s.status, ICON[s.status]), el('span', 't', s.text + (s.count > 1 ? '  ×' + s.count : '')), el('span', 'mu num', s.status === 'skipped' ? '' : fmtMs(s.ms)));
+        st.append(el('span', 'mu', String(s.n)), el('span', s.status, ICON[s.status]), el('span', 't', s.text + (s.count > 1 ? '  ×' + s.count : '')), el('span', 'mu num', s.status === 'skipped' || !s.ms ? '' : fmtMs(s.ms)));
+        if (s.shot) st.append(shotLink('data/shots/' + s.shot.split('/').map(encodeURIComponent).join('/')));
         det.append(st);
+        if (s.heal) det.append(el('div', 'heal', `🩹 Selector reparado (${s.heal.method}): ${s.heal.from} → ${s.heal.to}`));
       }
       return det;
     }));

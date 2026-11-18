@@ -80,9 +80,16 @@ const lib = (function makeLib(R) {
 
 // Datos: se ejecuta el test una vez por fila. Edita este arreglo o cárgalo desde tu propio CSV.
 const rows: Record<string, string>[] = [
-  {"nombres_de_personajes_iconicos_del_mundo":"Nelson Mandela"},
-  {"nombres_de_personajes_iconicos_del_mundo":"Mahatma Gandhi"},
-  {"nombres_de_personajes_iconicos_del_mundo":"Leonardo da Vinci"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Bug de desbordamiento de puntero en la biblioteca de networking de Go 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Vulnerabilidad de inyección SQL en el ORM de Django 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Error de manejo de concurrencia en la cola de mensajes de RabbitMQ 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Bug de fuga de memoria en el compilador de Swift 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Vulnerabilidad de acceso remoto en el motor de base de datos PostgreSQL 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Error de validación de entrada en el framework de React 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Bug de corrupción de datos en el sistema de archivos ext4 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Vulnerabilidad de escalado de privilegios en el kernel de Linux 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Error de cálculo de hash en la librería de hashing de C++ 2026"},
+  {"listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion":"Bug de división por cero en la librería matemática de Python 2026"},
 ];
 
 for (const [i, rowVars] of rows.entries()) {
@@ -90,7 +97,7 @@ for (const [i, rowVars] of rows.entries()) {
     const vars: Record<string, any> = { ...rowVars, row: i + 1, rows: rows.length, seed: 0 };
     await page.goto("https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN");
     await page.locator("#sb_form_q").first().fill("");
-    await page.locator("#sb_form_q").first().pressSequentially(`quien es '${lib.str(vars.nombres_de_personajes_iconicos_del_mundo)}'`, { delay: 50 });
+    await page.locator("#sb_form_q").first().pressSequentially(`${lib.str(vars.listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion)}`, { delay: 50 });
     await page.locator("#sb_form_q").first().press("Enter");
     await page.waitForURL(new RegExp("/search"));
     await page.waitForTimeout(Math.round(Number(lib.random(10, 15)) * 1000));

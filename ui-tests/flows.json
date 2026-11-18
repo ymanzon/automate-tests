@@ -42,12 +42,35 @@
     },
     {
       "created": 1794934809541,
-      "csv": "nombres_de_personajes_iconicos_del_mundo\nNelson Mandela\nMahatma Gandhi\nLeonardo da Vinci",
+      "csv": "listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion\nBug de desbordamiento de puntero en la biblioteca de networking de Go 2026\nVulnerabilidad de inyección SQL en el ORM de Django 2026\nError de manejo de concurrencia en la cola de mensajes de RabbitMQ 2026\nBug de fuga de memoria en el compilador de Swift 2026\nVulnerabilidad de acceso remoto en el motor de base de datos PostgreSQL 2026\nError de validación de entrada en el framework de React 2026\nBug de corrupción de datos en el sistema de archivos ext4 2026\nVulnerabilidad de escalado de privilegios en el kernel de Linux 2026\nError de cálculo de hash en la librería de hashing de C++ 2026\nBug de división por cero en la librería matemática de Python 2026",
+      "dataRows": 10,
       "dataSource": "ai",
       "id": "e9ntpo51",
       "name": "REWARDS (IA 1)",
-      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"quien es '{nombres_de_personajes_iconicos_del_mundo}'\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"{listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
     }
   ],
-  "plugins": []
+  "plugins": [
+    {
+      "name": "math.js",
+      "code": "const sum = (a, b) => a + b;\nconst subtract = (a, b) => a - b;\nconst multiply = (a, b) => a * b;\nconst divide = (a, b) => b !== 0 ? a / b : null;\nconst modulo = (a, b) => b !== 0 ? a % b : null;\nconst power = (a, b) => Math.pow(a, b);\nconst squareRoot = (a) => Math.sqrt(a);\nconst absolute = (a) => Math.abs(a);\nconst randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;",
+      "enabled": true
+    },
+    {
+      "name": "rfc.js",
+      "code": "const generateRFCBase = (name, paternal, maternal, birthDate) => {\n    //const clean = (v) => removeAccents(v.trim().toUpperCase());\n    const n = clean(name);\n    const p = clean(paternal);\n    const m = clean(maternal);\n    const date = new Date(birthDate);\n    const vowel = p.slice(1).match(/[AEIOU]/)?.[0] || \"X\";\n    const first = p[0] || \"X\";\n    const second = m[0] || \"X\";\n    const third = n[0] || \"X\";\n    const year = String(date.getFullYear()).slice(-2);\n    const month = String(date.getMonth() + 1).padStart(2, \"0\");\n    const day = String(date.getDate()).padStart(2, \"0\");\n    return `${first}${vowel}${second}${third}${year}${month}${day}`;\n};",
+      "enabled": true
+    },
+    {
+      "name": "curp.js",
+      "code": "const generateCURPBase = (name, paternal, maternal, birthDate, sex, state) => {\n    //const clean1 = (v) => removeAccents(v.trim().toUpperCase());\n    const p = clean(paternal);\n    const m = clean(maternal);\n    const n = clean(name);\n    const date = new Date(birthDate);\n    const year = String(date.getFullYear()).slice(-2);\n    const month = String(date.getMonth() + 1).padStart(2, \"0\");\n    const day = String(date.getDate()).padStart(2, \"0\");\n    const internal = (v) => v.slice(1).match(/[BCDFGHJKLMNPQRSTVWXYZ]/)?.[0] || \"X\";\n    return `${p[0] || \"X\"}${p.slice(1).match(/[AEIOU]/)?.[0] || \"X\"}${m[0] || \"X\"}${n[0] || \"X\"}${year}${month}${day}${sex.toUpperCase()}${state.toUpperCase()}${internal(p)}${internal(m)}${internal(n)}`;\n};",
+      "enabled": true
+    },
+    {
+      "name": "strings.js",
+      "code": "const removeAccents = (value) => value.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\");\nconst clean = (v) => removeAccents(v.trim().toUpperCase());\n",
+      "enabled": true
+    }
+  ],
+  "library": []
 }
