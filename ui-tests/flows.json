@@ -42,12 +42,12 @@
     },
     {
       "created": 1794934809541,
-      "csv": "listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion\nBug de desbordamiento de puntero en la biblioteca de networking de Go 2026\nVulnerabilidad de inyección SQL en el ORM de Django 2026\nError de manejo de concurrencia en la cola de mensajes de RabbitMQ 2026\nBug de fuga de memoria en el compilador de Swift 2026\nVulnerabilidad de acceso remoto en el motor de base de datos PostgreSQL 2026\nError de validación de entrada en el framework de React 2026\nBug de corrupción de datos en el sistema de archivos ext4 2026\nVulnerabilidad de escalado de privilegios en el kernel de Linux 2026\nError de cálculo de hash en la librería de hashing de C++ 2026\nBug de división por cero en la librería matemática de Python 2026",
+      "csv": "lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol\n\"Google Workspace: correo, Drive, Calendar, colaboración en tiempo real\"\n\"Microsoft 365: Office, Teams, SharePoint, Planner\"\n\"Slack: mensajería, canales, integraciones, llamadas de voz\"\n\"Zoom: videoconferencias, webinars, grabación, salas de break-out\"\n\"Notion: notas, bases de datos, wikis, tareas\"\n\"Dropbox Business: almacenamiento, sincronización, colaboración, permisos\"\n\"ClickUp: gestión de tareas, diagramas Gantt, automatizaciones, integraciones\"\n\"Airtable: bases de datos, hojas de cálculo, formularios, vistas\"\n\"Basecamp: proyectos, chat, archivos, calendario\"\n\"Confluence: wiki, documentación, plantillas, búsqueda\"",
       "dataRows": 10,
       "dataSource": "ai",
       "id": "e9ntpo51",
       "name": "REWARDS (IA 1)",
-      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"{listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"{lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
     }
   ],
   "plugins": [

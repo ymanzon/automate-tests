@@ -1,6 +1,6 @@
 goto("https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN")
 fill("#sb_form_q", "")
-type("#sb_form_q", "{listado_de_bugs_encontrador_por_hackers_en_el_2026_en_lenguajes_de_programacion}")
+type("#sb_form_q", "{lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol}")
 press("Enter", "#sb_form_q")
 wait_url("/search")
 sleep({random(10,15)})
