@@ -80,16 +80,16 @@ const lib = (function makeLib(R) {
 
 // Datos: se ejecuta el test una vez por fila. Edita este arreglo o cárgalo desde tu propio CSV.
 const rows: Record<string, string>[] = [
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Google Workspace: correo, Drive, Calendar, colaboración en tiempo real"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Microsoft 365: Office, Teams, SharePoint, Planner"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Slack: mensajería, canales, integraciones, llamadas de voz"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Zoom: videoconferencias, webinars, grabación, salas de break-out"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Notion: notas, bases de datos, wikis, tareas"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Dropbox Business: almacenamiento, sincronización, colaboración, permisos"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"ClickUp: gestión de tareas, diagramas Gantt, automatizaciones, integraciones"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Airtable: bases de datos, hojas de cálculo, formularios, vistas"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Basecamp: proyectos, chat, archivos, calendario"},
-  {"lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol":"Confluence: wiki, documentación, plantillas, búsqueda"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Copa MX 2026"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Liga MX Clausura 2026"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Campeonato Nacional de Fútbol 2026"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Copa de México 2027"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Liga MX Apertura 2027"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Campeonato Nacional de Béisbol 2026"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Campeonato Nacional de Hockey 2027"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Campeonato Nacional de Natación 2026"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Copa Nacional de Tenis 2027"},
+  {"Lista_de_eventos_deportivos_en_meico_del_2026_y_2027":"Campeonato Nacional de Baloncesto 2027"},
 ];
 
 for (const [i, rowVars] of rows.entries()) {
@@ -97,7 +97,7 @@ for (const [i, rowVars] of rows.entries()) {
     const vars: Record<string, any> = { ...rowVars, row: i + 1, rows: rows.length, seed: 0 };
     await page.goto("https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN");
     await page.locator("#sb_form_q").first().fill("");
-    await page.locator("#sb_form_q").first().pressSequentially(`${lib.str(vars.lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol)}`, { delay: 50 });
+    await page.locator("#sb_form_q").first().pressSequentially(`${lib.str(vars.Lista_de_eventos_deportivos_en_meico_del_2026_y_2027)}`, { delay: 50 });
     await page.locator("#sb_form_q").first().press("Enter");
     await page.waitForURL(new RegExp("/search"));
     await page.waitForTimeout(Math.round(Number(lib.random(10, 15)) * 1000));

@@ -42,12 +42,12 @@
     },
     {
       "created": 1794934809541,
-      "csv": "lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol\n\"Google Workspace: correo, Drive, Calendar, colaboración en tiempo real\"\n\"Microsoft 365: Office, Teams, SharePoint, Planner\"\n\"Slack: mensajería, canales, integraciones, llamadas de voz\"\n\"Zoom: videoconferencias, webinars, grabación, salas de break-out\"\n\"Notion: notas, bases de datos, wikis, tareas\"\n\"Dropbox Business: almacenamiento, sincronización, colaboración, permisos\"\n\"ClickUp: gestión de tareas, diagramas Gantt, automatizaciones, integraciones\"\n\"Airtable: bases de datos, hojas de cálculo, formularios, vistas\"\n\"Basecamp: proyectos, chat, archivos, calendario\"\n\"Confluence: wiki, documentación, plantillas, búsqueda\"",
+      "csv": "Lista_de_eventos_deportivos_en_meico_del_2026_y_2027\nCopa MX 2026\nLiga MX Clausura 2026\nCampeonato Nacional de Fútbol 2026\nCopa de México 2027\nLiga MX Apertura 2027\nCampeonato Nacional de Béisbol 2026\nCampeonato Nacional de Hockey 2027\nCampeonato Nacional de Natación 2026\nCopa Nacional de Tenis 2027\nCampeonato Nacional de Baloncesto 2027",
       "dataRows": 10,
       "dataSource": "ai",
       "id": "e9ntpo51",
       "name": "REWARDS (IA 1)",
-      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"{lista_de_mejores_herramientas_de_productividad_para_empresas_hoy_en_dia_en_espaniol}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
+      "script": "goto(\"https://www.bing.com/search?FORM=U523DF&PC=U536&q=&PC=U316&FORM=CHROMN\")\nfill(\"#sb_form_q\", \"\")\ntype(\"#sb_form_q\", \"{Lista_de_eventos_deportivos_en_meico_del_2026_y_2027}\")\npress(\"Enter\", \"#sb_form_q\")\nwait_url(\"/search\")\nsleep({random(10,15)})"
     }
   ],
   "plugins": [
